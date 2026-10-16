@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { AttendeeList } from "./components/AttendeeList";
 import { RegistrationForm } from "./components/RegistrationForm";
 
 export default function App() {
@@ -24,7 +25,7 @@ export default function App() {
 
         <div className="mt-8 grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_22rem]">
           <RegistrationForm onRegistered={() => setRefreshKey((key) => key + 1)} />
-          {/* AttendeeList goes here in Phase 10. refreshKey is unused until then. */}
+          <AttendeeList refreshKey={refreshKey} />
         </div>
       </main>
     </>
