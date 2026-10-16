@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+/* Colour and font tokens. Tailwind turns each one into classes like bg-navy or text-danger. */
+@theme {
+  --color-mist: #e8edf4;
+  --color-paper: #fbfcfe;
+  --color-navy: #0c2340;
+  --color-navy-soft: #475a75;
+  --color-signal: #ffc531;
+  --color-sky: #2459d9;
+  --color-line: #d3dbe7;
+  --color-field: #6e7f98;
+  --color-danger: #b4233f;
+  --color-danger-soft: #fdebee;
+  --color-ok: #1b7a4a;
+  --color-ok-soft: #e1f4ea;
+
+  --font-sans: "Figtree Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--color-mist);
+  color: var(--color-navy);
+  font-family: var(--font-sans);
+  line-height: 1.55;
+}
+
+/* Keyboard users need to see where they are. */
+:focus-visible {
+  outline: 3px solid var(--color-sky);
+  outline-offset: 2px;
+}
