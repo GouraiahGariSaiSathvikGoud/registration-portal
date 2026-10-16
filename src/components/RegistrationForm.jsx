@@ -2,8 +2,10 @@ import { useState } from "react";
 import { Form, Formik } from "formik";
 import { Button } from "./ui/Button";
 import { CheckboxField } from "./ui/CheckboxField";
+import { PasswordField } from "./ui/PasswordField";
 import { SelectField } from "./ui/SelectField";
 import { TextField } from "./ui/TextField";
+import { TicketPreview } from "./TicketPreview";
 import { COUNTRIES } from "../data/countries";
 import { createRegistration } from "../services/api";
 import { initialValues, registrationSchema } from "../validation/registrationSchema";
@@ -40,6 +42,7 @@ export function RegistrationForm({ onRegistered }) {
       <Formik initialValues={initialValues} validationSchema={registrationSchema} onSubmit={handleSubmit}>
         {({ isSubmitting }) => (
           <Form noValidate className="grid gap-5">
+            <TicketPreview />
             <TextField name="fullName" label="Full name" autoComplete="name" placeholder="Asha Rao" />
             <TextField name="email" label="Email" type="email" autoComplete="email" placeholder="asha@example.com" />
             <div className="grid gap-5 sm:grid-cols-2">
@@ -47,14 +50,13 @@ export function RegistrationForm({ onRegistered }) {
               <SelectField name="country" label="Country" placeholder="Choose a country" options={COUNTRIES} />
             </div>
             <div className="grid gap-5 sm:grid-cols-2">
-              <TextField
+              <PasswordField
                 name="password"
                 label="Password"
-                type="password"
                 autoComplete="new-password"
                 hint="8+ characters, one capital letter, one number."
               />
-              <TextField name="confirmPassword" label="Confirm password" type="password" autoComplete="new-password" />
+              <PasswordField name="confirmPassword" label="Confirm password" autoComplete="new-password" />
             </div>
             <CheckboxField name="terms">I agree to the event code of conduct.</CheckboxField>
 
