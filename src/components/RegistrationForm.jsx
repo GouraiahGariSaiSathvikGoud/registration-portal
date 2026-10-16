@@ -5,20 +5,31 @@ import { CheckboxField } from "./ui/CheckboxField";
 import { SelectField } from "./ui/SelectField";
 import { TextField } from "./ui/TextField";
 import { COUNTRIES } from "../data/countries";
+import { createRegistration } from "../services/api";
 import { initialValues, registrationSchema } from "../validation/registrationSchema";
 
 export function RegistrationForm({ onRegistered }) {
-  const [success, setSuccess] = useState(null);
+  const [success, setSuccess] = useState(null); // the name of the person who just registered
   const [serverError, setServerError] = useState(null);
 
-  // TEMPORARY: pretend to save for 1 second. We replace this in Phase 9.
-  async function handleSubmit(values, { resetForm }) {
+  async function handleSubmit(values, { setFieldError, setErrors, resetForm }) {
     setServerError(null);
     setSuccess(null);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-    setSuccess(values.fullName);
-    resetForm();
-    onRegistered();
+    try {
+      const saved = await createRegistration(values);
+      setSuccess(saved.fullName);
+      resetForm();
+      onRegistered();
+    } catch (error) {
+      if (error.status === 409) {
+        // The database says this email already exists: show it under the Email field.
+        setFieldError("email", "This email is already registered.");
+      } else if (error.status === 400 && error.body?.errors) {
+        setErrors(error.body.errors); // the server's own validation messages, field by field
+      } else {
+        setServerError(`We could not save your registration. ${error.message} Your answers are still here, so you can try again.`);
+      }
+    }
   }
 
   return (
